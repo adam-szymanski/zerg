@@ -14,7 +14,10 @@ public:
         : mult(mult_) {}
 
     FormulaEntity mutate(const FormulaEntity& e) {
-        return FormulaEntity(e.input_size, e.value * randf(1.0f - mult, 1.0f + mult));
+        FormulaEntity e2 = e;
+        size_t pos = rand(e2.codons.size());
+        e2.codons[pos] = FormulaCodon(pos + e2.inputSize);
+        return e2;
     }
 };
 

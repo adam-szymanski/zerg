@@ -1,4 +1,5 @@
 #include "lib/genetic/classification/ClassificationEnvironment.h"
+#include "lib/genetic/classification/FormulaCodon.h"
 #include "lib/genetic/classification/FormulaEntity.h"
 #include "lib/genetic/classification/FormulaEntityMutator.h"
 #include "lib/genetic/selectors/ArenaSelector.h"
