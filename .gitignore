@@ -1,5 +1,8 @@
-$ Bazel
+# Bazel
 bazel*
+
+# VSCode
+.vscode
 
 # Prerequisites
 *.d
