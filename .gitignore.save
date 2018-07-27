@@ -1,11 +1,6 @@
-# Bazel
-bazel*
-
-# VSCode
-.vscode
-
 # Prerequisites
 *.d
+
 
 # Compiled Object files
 *.slo

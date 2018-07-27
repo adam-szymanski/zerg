@@ -1,5 +1,5 @@
 
-namespace Ummon {
+namespace Zerg {
   
 #define assertNotNull(a)\
   if ((a) == nullptr) {\
@@ -41,4 +41,4 @@ namespace Ummon {
 	  *((int*)NULL) = 1;\
   }
 
-}; // namespace Ummon
+}; // namespace Zerg
