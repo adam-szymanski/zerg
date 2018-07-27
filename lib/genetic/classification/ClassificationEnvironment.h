@@ -20,6 +20,7 @@ public:
 
     float score(Entity& entity) {
         float diff = labels.val(0) - entity.evaluate(examples.getPointer(), examples.getPointer() + examples.getRowSize());
+        cout << "eval: (" << entity << ") " << entity.evaluate(examples.getPointer(), examples.getPointer() + examples.getRowSize()) << " score: " << diff * diff << endl;
         return diff * diff;
     }
 };

@@ -3,24 +3,50 @@
 
 #include "lib/util/Random.h"
 
+#include "lib/genetic/classification/FormulaCodon.h"
+
 namespace Zerg {
 
 class FormulaEntity {
 public:
-    float value;
-    size_t input_size;
+    vector<FormulaCodon> codons;
+    size_t inputSize;
+    vector<float> valueCache;
 
-    FormulaEntity(size_t input_size_, float value_)
-        : value(value_)
-        , input_size(input_size_) {
+    FormulaEntity(size_t inputSize_, size_t len)
+        : inputSize(inputSize_)
+        , valueCache(inputSize + len) {
+            codons.reserve(len);
+            for (size_t i = 0; i < len; ++i)
+                codons.push_back(FormulaCodon(i + inputSize));
         }
 
-    FormulaEntity(size_t input_size_)
-        : FormulaEntity(input_size_, randf()) {}
-
     template<typename Iter>
-    float evaluate(const Iter& begin, const Iter& end) { return value; }
+    float evaluate(const Iter& begin, const Iter& end) {
+        //cout << "evaluate: " << endl;
+        assertIsEqual(begin + inputSize, end);
+        for (size_t i = 0; i < inputSize; ++ i) {
+            //cout << valueCache[i] << " ";
+            valueCache[i] = *(begin + i);
+        }
+        for (size_t i = 0; i < codons.size(); ++ i) {
+            valueCache[i + inputSize] = codons[i].execute(valueCache, i + inputSize);
+            if (codons[i].type == FORMULA_CODON_RETURN)
+                return valueCache[i + inputSize];
+        }
+        //cout << endl;
+        return valueCache[valueCache.size() - 1];
+    }
 };
+
+
+
+std::ostream& operator<<(std::ostream& os, const FormulaEntity& fe) {
+    for (auto& codon : fe.codons) {
+        cout << codon << " ";
+    }
+    return os;
+}
 
 }
 

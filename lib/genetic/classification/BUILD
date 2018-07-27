@@ -2,6 +2,7 @@ cc_library(
     name = "classification",
     srcs = [
         "ClassificationEnvironment.h",
+        "FormulaCodon.h",
         "FormulaEntity.h",
         "FormulaEntityMutator.h",
     ],

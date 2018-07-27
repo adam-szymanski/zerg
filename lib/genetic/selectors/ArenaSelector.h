@@ -40,7 +40,7 @@ public:
         sort(rank.begin(), rank.end(), [entities](const int& a, const int& b) -> bool { return *entities[a].score < *entities[b].score; });
 
         // Mutate the best one and place in place of worst one.
-        cout << "Best score: " << *entities[rank[0]].score << " " << entities[rank[0]].entity.value << endl;
+        cout << "Best score: " << *entities[rank[0]].score << " (" << entities[rank[0]].entity << ")" << endl;
         entities[rank[rank.size() - 1]] = SE(mutator.mutate(entities[rank[0]].entity));
     }
 };
