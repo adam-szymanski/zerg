@@ -3,6 +3,7 @@ cc_binary(
     srcs = ["main.cc"],
     deps = [
         "//lib/assert:assert",
+        "//lib/genetic:genetic",
         "//lib/tensor:tensor",
     ]
 )

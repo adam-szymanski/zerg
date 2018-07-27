@@ -1,5 +1,5 @@
-#ifndef LIB_TENSOR_TENSOR_SIZE_CUH
-#define LIB_TENSOR_TENSOR_SIZE_CUH
+#ifndef LIB_TENSOR_TENSOR_SIZE_H
+#define LIB_TENSOR_TENSOR_SIZE_H
 
 #include <cstdio>
 #include <iostream>
@@ -55,4 +55,4 @@ std::ostream& operator<<(std::ostream& os, const TensorSize& t);
 
 }; // namespace Zerg
 
-#endif // LIB_TENSOR_TENSOR_SIZE_CUH
+#endif // LIB_TENSOR_TENSOR_SIZE_H

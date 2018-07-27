@@ -1,5 +1,5 @@
-#ifndef LIB_TENSOR_TENSOR_CUH
-#define LIB_TENSOR_TENSOR_CUH
+#ifndef LIB_TENSOR_TENSOR_H
+#define LIB_TENSOR_TENSOR_H
 
 #include "lib/assert/Assert.h"
 #include "lib/tensor/TensorSize.h"
@@ -37,7 +37,7 @@ public:
 	void setRows(size_t rows, bool shrinkToFit = false);
   void addRows(size_t rows, bool shrinkToFit = false);
   inline size_t getRowsNum() const { return size.getH_2D(); }
-  inline size_t getRowSize() const { return size.getDimensionNum() == 1 ? 1 : size.getW_2D(); }
+  inline size_t getRowSize() const { return size.getDimensionNum() <= 1 ? size.getDimensionNum() : size.getW_2D(); }
   inline size_t getElementsNum() const { return size.getElementsNum(); }
   inline const float* getPointer() const { return &(data[0]); }
 	inline float* getPointer() { return &(data[0]); }
@@ -94,4 +94,4 @@ std::ostream& operator<<(std::ostream& os, const Tensor& t);
 
 }; // namespace Zerg
 
-#endif // LIB_TENSOR_TENSOR_CUH
+#endif // LIB_TENSOR_TENSOR_H
