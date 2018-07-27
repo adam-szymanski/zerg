@@ -37,12 +37,14 @@ class Population {
 private:
     Environment& env;
     Selector& selector;
+    Mutator& mutator;
     vector<ScoredEntity<Entity>> entities;
 
 public:
-    Population(Environment& env_, Selector& selector_, size_t population_size = 0)
+    Population(Environment& env_, Selector& selector_, Mutator& mutator_, size_t population_size = 0)
         : env(env_)
         , selector(selector_)
+        , mutator(mutator_)
         , entities(population_size) {}
 
     Environment& getEnv() { return env; }

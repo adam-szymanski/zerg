@@ -12,6 +12,9 @@ public:
     FormulaEntity()
         : value(randf()) {}
 
+    FormulaEntity(float value_)
+        : value(value_) {}
+
     float evaluate() { return value; }
 };
 

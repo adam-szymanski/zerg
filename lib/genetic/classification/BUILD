@@ -3,6 +3,7 @@ cc_library(
     srcs = [
         "ClassificationEnvironment.h",
         "FormulaEntity.h",
+        "FormulaEntityMutator.h",
     ],
     hdrs = [
     ],
