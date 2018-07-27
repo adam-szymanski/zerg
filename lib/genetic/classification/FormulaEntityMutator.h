@@ -14,7 +14,7 @@ public:
         : mult(mult_) {}
 
     FormulaEntity mutate(const FormulaEntity& e) {
-        return FormulaEntity(e.value * randf(1.0f - mult, 1.0f + mult));
+        return FormulaEntity(e.input_size, e.value * randf(1.0f - mult, 1.0f + mult));
     }
 };
 

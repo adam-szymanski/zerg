@@ -37,7 +37,7 @@ public:
 	void setRows(size_t rows, bool shrinkToFit = false);
   void addRows(size_t rows, bool shrinkToFit = false);
   inline size_t getRowsNum() const { return size.getH_2D(); }
-  inline size_t getRowSize() const { return size.getDimensionNum() == 1 ? 1 : size.getW_2D(); }
+  inline size_t getRowSize() const { return size.getDimensionNum() <= 1 ? size.getDimensionNum() : size.getW_2D(); }
   inline size_t getElementsNum() const { return size.getElementsNum(); }
   inline const float* getPointer() const { return &(data[0]); }
 	inline float* getPointer() { return &(data[0]); }
