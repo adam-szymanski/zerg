@@ -16,12 +16,31 @@ public:
     ClassificationEnvironment(const Tensor& examples_, const Tensor& labels_)
         : examples(examples_)
         , labels(labels_) {
+        cout << "ClassificationEnvironment" << labels.getSize().getDimensionNum() << endl;
+        assertIsEqual(labels.getRowSize(), 1);
+        cout << "/ClassificationEnvironment" << endl;
     }
 
     float score(Entity& entity) {
-        float diff = labels.val(0) - entity.evaluate(examples.getPointer(), examples.getPointer() + examples.getRowSize());
-        cout << "eval: (" << entity << ") " << entity.evaluate(examples.getPointer(), examples.getPointer() + examples.getRowSize()) << " score: " << diff * diff << endl;
-        return diff * diff;
+        float error = 0.0f;
+        for (size_t i = 0; i < examples.getRowsNum(); ++i) {
+            float out = entity.evaluate(examples.getPointer() + examples.getSize().getElementPos(0, i), examples.getPointer() + examples.getSize().getElementPos(0, i + 1));
+            if (out != out) {
+                cout << "input: ";
+                for (size_t x = 0; x < examples.getRowSize(); ++ x)
+                    cout << examples.val(x, i) << " ";
+                cout << endl;
+                cout << "vals: ";
+                for (size_t x = 0; x < entity.valueCache.size(); ++ x)
+                    cout << entity.valueCache[x] << " ";
+                cout << endl;
+                cout << entity << endl;
+            }
+            float diff = labels.val(0, i) - out;
+
+            error += diff * diff;
+        }
+        return error;
     }
 };
 

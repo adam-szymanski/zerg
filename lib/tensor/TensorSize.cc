@@ -84,13 +84,13 @@ size_t TensorSize::getElementPos(size_t x, size_t y, size_t z, size_t w) const {
   return x * getDimSize(3) + getDimSize(2) * y + getDimSize(1) * z + getDimSize(0) * w;
 }
 size_t TensorSize::getStride(size_t dim, size_t tensorDim) const {
-  assertIsEqual(tensorDim, dim);
+  assertIsGreaterOrEqual(tensorDim, dim);
   const size_t l = tensorDim - dim;
   if (l > getDimensionNum()) return 0;
   return getDimSize(tensorDim - 1 - dim);
 }
 size_t TensorSize::getDimSize(size_t dim, size_t tensorDim) const {
-  assertIsEqual(tensorDim, dim);
+  assertIsGreaterOrEqual(tensorDim, dim);
   const size_t l = tensorDim - dim;
   if (l > getDimensionNum()) return 0;
   if (dim == 0)

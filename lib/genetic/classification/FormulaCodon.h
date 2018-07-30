@@ -15,8 +15,10 @@ enum FormulaCodonType {
     FORMULA_CODON_ADD,
     FORMULA_CODON_MUL,
     FORMULA_CODON_DIV,
+    FORMULA_CODON_SUM_RANGE,
+    FORMULA_CODON_LOG,
     FORMULA_CODON_RETURN,
-    FORMULA_CODON_NUM
+    FORMULA_CODON_NUM,
 };
 
 struct Address {
@@ -42,15 +44,19 @@ public:
                 case FORMULA_CODON_ADD:
                 case FORMULA_CODON_MUL:
                 case FORMULA_CODON_DIV:
+                case FORMULA_CODON_SUM_RANGE:
                     if (pos < 1) break;
-                    a.jumpDistance = pos > 1 ? rand(1, pos) : 1;
-                    b.jumpDistance = pos > 1 ? rand(1, pos) : 1;
+                    a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
+                    b.jumpDistance = pos > 1 ? rand(0, pos) : 0;
+                    assertNotEqual(pos, a.jumpDistance);
+                    assertNotEqual(pos, b.jumpDistance);
                     ok = true;
                     break;
+                case FORMULA_CODON_LOG:
                 case FORMULA_CODON_RETURN:
                     if (pos < 1) break;
                     ok = true;
-                    a.jumpDistance = pos > 1 ? rand(1, pos) : 1;
+                    a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
                     break;
                 default : assertIsTrue(false);
             }
@@ -62,7 +68,21 @@ public:
             case FORMULA_CODON_SYMBOL: return value;
             case FORMULA_CODON_ADD: return getValAtAddress(a, values, pos) + getValAtAddress(b, values, pos);
             case FORMULA_CODON_MUL: return getValAtAddress(a, values, pos) * getValAtAddress(b, values, pos);
-            case FORMULA_CODON_DIV: return getValAtAddress(a, values, pos) / (std::max(getValAtAddress(b, values, pos), 0.0001f));
+            case FORMULA_CODON_DIV: {
+                float bVal = getValAtAddress(b, values, pos);
+                return bVal != 0 ? getValAtAddress(a, values, pos) / bVal : 0.0f;
+            }
+            case FORMULA_CODON_SUM_RANGE: {
+                float sum = 0;
+                for (size_t i = a.jumpDistance; i < b.jumpDistance; ++i) {
+                    sum += getValAtAddress(a, values, pos);
+                }
+                return sum;
+            }
+            case FORMULA_CODON_LOG: {
+                float aVal = getValAtAddress(a, values, pos);
+                return log(aVal > 1.0f ? aVal : 1.0f);
+            }
             case FORMULA_CODON_RETURN: return getValAtAddress(a, values, pos);
             default : assertIsTrue(false); return 0;
         }
@@ -70,8 +90,11 @@ public:
 
 private:
    inline float getValAtAddress(const Address& add, const vector<float>& values, size_t pos) {
-       assertIsGreaterOrEqual(pos, add.jumpDistance);
-       return values[pos - add.jumpDistance];
+       return getValAtAddress(add.jumpDistance, values, pos);
+   }
+   inline float getValAtAddress(const size_t& jumpDistance, const vector<float>& values, size_t pos) {
+       assertIsGreater(pos, jumpDistance);
+       return values[jumpDistance];
    }
 };
 
@@ -81,6 +104,8 @@ std::ostream& operator<<(std::ostream& os, const FormulaCodon& fc) {
         case FORMULA_CODON_ADD: os << "+(" << fc.a.jumpDistance << ", " << fc.b.jumpDistance << ")"; break;
         case FORMULA_CODON_MUL: os << "*(" << fc.a.jumpDistance << ", " << fc.b.jumpDistance << ")"; break;
         case FORMULA_CODON_DIV: os << "/(" << fc.a.jumpDistance << ", " << fc.b.jumpDistance << ")"; break;
+        case FORMULA_CODON_SUM_RANGE: os << "+(" << fc.a.jumpDistance << ":" << fc.b.jumpDistance << ")"; break;
+        case FORMULA_CODON_LOG: os << "log(" << fc.a.jumpDistance << ")"; break;
         case FORMULA_CODON_RETURN: os << "ret(" << fc.a.jumpDistance << ")"; break;
         default : assertIsTrue(false);
     }
