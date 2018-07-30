@@ -16,9 +16,7 @@ public:
     ClassificationEnvironment(const Tensor& examples_, const Tensor& labels_)
         : examples(examples_)
         , labels(labels_) {
-        cout << "ClassificationEnvironment" << labels.getSize().getDimensionNum() << endl;
         assertIsEqual(labels.getRowSize(), 1);
-        cout << "/ClassificationEnvironment" << endl;
     }
 
     float score(Entity& entity) {
