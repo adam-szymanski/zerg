@@ -23,18 +23,23 @@ public:
 
     template<typename Iter>
     float evaluate(const Iter& begin, const Iter& end) {
-        //cout << "evaluate: " << endl;
+        float val = evaluateInner(begin, end);
+        return 1 / (1 + exp(-val));
+    }
+
+private:
+    template<typename Iter>
+    float evaluateInner(const Iter& begin, const Iter& end) {
         assertIsEqual(begin + inputSize, end);
         for (size_t i = 0; i < inputSize; ++ i) {
-            //cout << valueCache[i] << " ";
             valueCache[i] = *(begin + i);
         }
         for (size_t i = 0; i < codons.size(); ++ i) {
             valueCache[i + inputSize] = codons[i].execute(valueCache, i + inputSize);
+            //cout << codons[i] << " " << valueCache[i + inputSize] << endl;
             if (codons[i].type == FORMULA_CODON_RETURN)
                 return valueCache[i + inputSize];
         }
-        //cout << endl;
         return valueCache[valueCache.size() - 1];
     }
 };
