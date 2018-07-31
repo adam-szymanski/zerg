@@ -3,6 +3,7 @@
 
 using namespace std;
 
+#include "lib/assert/Assert.h"
 #include "lib/tensor/Tensor.h"
 
 namespace Zerg {
@@ -16,9 +17,8 @@ public:
     ClassificationEnvironment(const Tensor& examples_, const Tensor& labels_)
         : examples(examples_)
         , labels(labels_) {
-        cout << "ClassificationEnvironment" << labels.getSize().getDimensionNum() << endl;
         assertIsEqual(labels.getRowSize(), 1);
-        cout << "/ClassificationEnvironment" << endl;
+        assertIsEqual(labels.getRowsNum(), examples.getRowsNum());
     }
 
     float score(Entity& entity) {

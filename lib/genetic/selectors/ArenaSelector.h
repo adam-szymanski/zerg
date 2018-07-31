@@ -4,6 +4,7 @@
 #include <set>
 #include <tuple>
 
+#include "lib/assert/Assert.h"
 #include "lib/util/Random.h"
 #include "lib/genetic/Population.h"
 
@@ -11,16 +12,18 @@ using namespace std;
 
 namespace Zerg {
 
-template<class Entity, class Environment, class Mutator>
+template<class Entity, class Environment, class Mutator, class Crosser>
 class ArenaSelector {
     size_t arenaSize;
 
     typedef ScoredEntity<Entity> SE;
 public:
     ArenaSelector(size_t arenaSize_)
-        : arenaSize(arenaSize_) {}
+        : arenaSize(arenaSize_) {
+        assertIsGreater(arenaSize, 2);
+    }
 
-    void select(vector<SE>& entities, Environment& env, Mutator& mutator) {
+    void select(vector<SE>& entities, Environment& env, Mutator& mutator, Crosser& crosser) {
         assertIsGreaterOrEqual(entities.size(), arenaSize);
         set<size_t> selectedIds;
         int newId;
@@ -41,7 +44,7 @@ public:
 
         // Mutate the best one and place in place of worst one.
         cout << "Best score: " << *entities[rank[0]].score << " (" << entities[rank[0]].entity << ")" << endl;
-        entities[rank[rank.size() - 1]] = SE(mutator.mutate(entities[rank[0]].entity));
+        entities[rank[rank.size() - 1]] = SE(mutator.mutate(crosser.cross(entities[rank[0]].entity, entities[rank[1]].entity)));
     }
 };
 
