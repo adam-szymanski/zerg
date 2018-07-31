@@ -24,19 +24,21 @@ struct ScoredEntity {
         , score(score_) {}
 };
 
-template<class Entity, class Environment, class Mutator, class Selector>
+template<class Entity, class Environment, class Mutator, class Selector, class Crosser>
 class Population {
 public:
     Environment& env;
     Selector& selector;
     Mutator& mutator;
+    Crosser& crosser;
     vector<ScoredEntity<Entity>> entities;
 
 public:
-    Population(Environment& env_, Selector& selector_, Mutator& mutator_, vector<Entity>& entities_)
+    Population(Environment& env_, Selector& selector_, Mutator& mutator_, Crosser& crosser_, vector<Entity>& entities_)
         : env(env_)
         , selector(selector_)
-        , mutator(mutator_) {
+        , mutator(mutator_)
+        , crosser(crosser_) {
         entities.reserve(entities_.size());
         for (auto& e : entities_)
             entities.push_back(ScoredEntity<Entity>(e));
@@ -47,6 +49,10 @@ public:
     Entity& getEntity(size_t index) {
         assertIsGreater(entities.size(), index);
         return entities[index];
+    }
+
+    void step() {
+        selector.select(entities, env, mutator, crosser);
     }
 };
 

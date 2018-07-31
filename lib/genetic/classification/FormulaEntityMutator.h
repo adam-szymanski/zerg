@@ -8,12 +8,17 @@ namespace Zerg {
 
 class FormulaEntityMutator {
 public:
-    float mult;
+    float prob;
 
-    FormulaEntityMutator(float mult_)
-        : mult(mult_) {}
+    FormulaEntityMutator(float prob_)
+        : prob(prob_) {
+            assertIsGreaterOrEqual(1.0f, prob);
+            assertIsGreaterOrEqual(prob, 0.0f);
+        }
 
     FormulaEntity mutate(const FormulaEntity& e) {
+        if (randf() > prob)
+            return e;
         FormulaEntity e2 = e;
         size_t pos = rand(e2.codons.size());
         e2.codons[pos] = FormulaCodon(pos + e2.inputSize);

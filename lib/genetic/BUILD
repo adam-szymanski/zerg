@@ -2,6 +2,7 @@ cc_library(
     name = "genetic",
     srcs = [
         "Genetic.h",
+        "NopCrosser.h",
         "Population.h",
     ],
     hdrs = [

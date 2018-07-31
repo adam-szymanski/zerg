@@ -53,11 +53,11 @@ public:
                     ok = true;
                     break;
                 case FORMULA_CODON_LOG:
-                case FORMULA_CODON_RETURN:
                     if (pos < 1) break;
                     ok = true;
                     a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
                     break;
+                case FORMULA_CODON_RETURN: assertIsGreater(pos, 0); break;
                 default : assertIsTrue(false);
             }
         }
@@ -83,7 +83,7 @@ public:
                 float aVal = getValAtAddress(a, values, pos);
                 return log(aVal > 1.0f ? aVal : 1.0f);
             }
-            case FORMULA_CODON_RETURN: return getValAtAddress(a, values, pos);
+            case FORMULA_CODON_RETURN: return getValAtAddress(pos - 1, values, pos);
             default : assertIsTrue(false); return 0;
         }
     }
@@ -96,6 +96,9 @@ private:
        assertIsGreater(pos, jumpDistance);
        return values[jumpDistance];
    }
+   void randomOfType(FormulaCodonType type) {
+       
+   }
 };
 
 std::ostream& operator<<(std::ostream& os, const FormulaCodon& fc) {
@@ -106,7 +109,7 @@ std::ostream& operator<<(std::ostream& os, const FormulaCodon& fc) {
         case FORMULA_CODON_DIV: os << "/(" << fc.a.jumpDistance << ", " << fc.b.jumpDistance << ")"; break;
         case FORMULA_CODON_SUM_RANGE: os << "+(" << fc.a.jumpDistance << ":" << fc.b.jumpDistance << ")"; break;
         case FORMULA_CODON_LOG: os << "log(" << fc.a.jumpDistance << ")"; break;
-        case FORMULA_CODON_RETURN: os << "ret(" << fc.a.jumpDistance << ")"; break;
+        case FORMULA_CODON_RETURN: os << "ret"; break;
         default : assertIsTrue(false);
     }
     return os;

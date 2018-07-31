@@ -5,6 +5,7 @@ cc_library(
         "FormulaCodon.h",
         "FormulaEntity.h",
         "FormulaEntityMutator.h",
+        "FormulaEntityOnePointCross.h",
     ],
     hdrs = [
     ],

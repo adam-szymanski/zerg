@@ -29,8 +29,9 @@ int main() {
     examples.val(1, 3) = 1;
 
     ClassificationEnvironment<FormulaEntity> env(examples, labels);
-    ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator> selector(5);
-    FormulaEntityMutator mutator(0.1f);
+    ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator, FormulaEntityOnePointCross> selector(5);
+    FormulaEntityMutator mutator(0.5f);
+    FormulaEntityOnePointCross crosser;
 
     vector<FormulaEntity> entities;
     for (int i = 0; i < 30; ++i)
@@ -39,10 +40,11 @@ int main() {
     Population<FormulaEntity,
                ClassificationEnvironment<FormulaEntity>,
                FormulaEntityMutator,
-               ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator>> population(env, selector, mutator, entities);
+               ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator, FormulaEntityOnePointCross>,
+               FormulaEntityOnePointCross> population(env, selector, mutator, crosser, entities);
 
     for (int i = 0; i < 1000000; ++i) {
-        selector.select(population.entities, env, mutator);
+        population.step();
     }
     return 0;
 }

@@ -3,6 +3,7 @@
 
 using namespace std;
 
+#include "lib/assert/Assert.h"
 #include "lib/tensor/Tensor.h"
 
 namespace Zerg {
@@ -17,6 +18,7 @@ public:
         : examples(examples_)
         , labels(labels_) {
         assertIsEqual(labels.getRowSize(), 1);
+        assertIsEqual(labels.getRowsNum(), examples.getRowsNum());
     }
 
     float score(Entity& entity) {
