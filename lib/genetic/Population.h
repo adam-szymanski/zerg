@@ -32,6 +32,7 @@ public:
     Mutator& mutator;
     Crosser& crosser;
     vector<ScoredEntity<Entity>> entities;
+    size_t steps = 0;
 
 public:
     Population(Environment& env_, Selector& selector_, Mutator& mutator_, Crosser& crosser_, vector<Entity>& entities_)
@@ -52,9 +53,15 @@ public:
     }
 
     void step() {
-        selector.select(entities, env, mutator, crosser);
+        selector.select(steps, entities, env, mutator, crosser);
+        ++steps;
     }
 };
+
+template<class Entity, class Environment, class Mutator, class Selector, class Crosser>
+Population<Entity, Environment, Mutator, Selector, Crosser> makePopulation(Environment& env_, Selector& selector_, Mutator& mutator_, Crosser& crosser_, vector<Entity>& entities_) {
+    return Population<Entity, Environment, Mutator, Selector, Crosser>(env_, selector_, mutator_, crosser_, entities_);
+}
 
 }
 

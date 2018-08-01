@@ -29,7 +29,8 @@ int main() {
     examples.val(1, 3) = 1;
 
     ClassificationEnvironment<FormulaEntity> env(examples, labels);
-    ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator, FormulaEntityOnePointCross> selector(5);
+    OnePlusLambdaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator, FormulaEntityOnePointCross> selectorOnePlus;
+    ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator, FormulaEntityOnePointCross> selectorArena(5);
     FormulaEntityMutator mutator(0.5f);
     FormulaEntityOnePointCross crosser;
 
@@ -37,12 +38,7 @@ int main() {
     for (int i = 0; i < 30; ++i)
         entities.push_back(FormulaEntity(examples.getRowSize(), 15));
 
-    Population<FormulaEntity,
-               ClassificationEnvironment<FormulaEntity>,
-               FormulaEntityMutator,
-               ArenaSelector<FormulaEntity, ClassificationEnvironment<FormulaEntity>, FormulaEntityMutator, FormulaEntityOnePointCross>,
-               FormulaEntityOnePointCross> population(env, selector, mutator, crosser, entities);
-
+    auto population = makePopulation(env, selectorOnePlus, mutator, crosser, entities);
     for (int i = 0; i < 1000000; ++i) {
         population.step();
     }

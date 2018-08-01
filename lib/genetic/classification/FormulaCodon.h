@@ -33,34 +33,11 @@ public:
     Address b;
 
     FormulaCodon(size_t pos) {
-        bool ok = false;
-        while (!ok) {
-            type = (FormulaCodonType)rand(FORMULA_CODON_NUM);
-            switch (type) {
-                case FORMULA_CODON_SYMBOL:
-                    value = randf(-1.0f, 1.0f);
-                    ok = true;
-                    break;
-                case FORMULA_CODON_ADD:
-                case FORMULA_CODON_MUL:
-                case FORMULA_CODON_DIV:
-                case FORMULA_CODON_SUM_RANGE:
-                    if (pos < 1) break;
-                    a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
-                    b.jumpDistance = pos > 1 ? rand(0, pos) : 0;
-                    assertNotEqual(pos, a.jumpDistance);
-                    assertNotEqual(pos, b.jumpDistance);
-                    ok = true;
-                    break;
-                case FORMULA_CODON_LOG:
-                    if (pos < 1) break;
-                    ok = true;
-                    a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
-                    break;
-                case FORMULA_CODON_RETURN: assertIsGreater(pos, 0); break;
-                default : assertIsTrue(false);
-            }
-        }
+        while (!randomOfType(type = (FormulaCodonType)rand(FORMULA_CODON_NUM), pos));
+    }
+
+    FormulaCodon(FormulaCodonType type_, size_t pos) {
+        assertIsTrue(randomOfType(type = type_, pos));
     }
 
     float execute(const vector<float>& values, size_t pos) {
@@ -96,8 +73,29 @@ private:
        assertIsGreater(pos, jumpDistance);
        return values[jumpDistance];
    }
-   void randomOfType(FormulaCodonType type) {
-       
+   bool randomOfType(FormulaCodonType type, size_t pos) {
+        switch (type) {
+            case FORMULA_CODON_SYMBOL:
+                value = randf(-1.0f, 1.0f);
+                return true;
+            case FORMULA_CODON_ADD:
+            case FORMULA_CODON_MUL:
+            case FORMULA_CODON_DIV:
+            case FORMULA_CODON_SUM_RANGE:
+                if (pos < 1) return false;
+                a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
+                b.jumpDistance = pos > 1 ? rand(0, pos) : 0;
+                assertNotEqual(pos, a.jumpDistance);
+                assertNotEqual(pos, b.jumpDistance);
+                return true;
+            case FORMULA_CODON_LOG:
+                if (pos < 1) return false;
+                a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
+                return true;
+            case FORMULA_CODON_RETURN: assertIsGreater(pos, 0); return true;
+            default : assertIsTrue(false);
+        }
+        return false;
    }
 };
 
