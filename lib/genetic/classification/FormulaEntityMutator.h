@@ -17,11 +17,15 @@ public:
         }
 
     FormulaEntity mutate(const FormulaEntity& e) {
-        if (randf() > prob)
-            return e;
+        float acc = prob;
         FormulaEntity e2 = e;
-        size_t pos = rand(e2.codons.size());
-        e2.codons[pos] = FormulaCodon(pos + e2.inputSize);
+        while (acc > 0) {
+            if (randf() > prob)
+                break;
+            size_t pos = rand(e2.codons.size());
+            e2.codons[pos] = FormulaCodon(pos + e2.inputSize);
+            acc -= 1.0f;
+        }
         return e2;
     }
 };

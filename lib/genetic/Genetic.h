@@ -4,5 +4,7 @@
 #include "lib/genetic/classification/FormulaEntityOnePointCross.h"
 #include "lib/genetic/classification/FormulaEntityMutator.h"
 #include "lib/genetic/selectors/ArenaSelector.h"
+#include "lib/genetic/selectors/OnePlusLambdaSelector.h"
+#include "lib/genetic/selectors/Selector.h"
 #include "lib/genetic/NopCrosser.h"
 #include "lib/genetic/Population.h"

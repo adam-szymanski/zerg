@@ -2,6 +2,8 @@ cc_library(
     name = "selectors",
     srcs = [
         "ArenaSelector.h",
+        "OnePlusLambdaSelector.h",
+        "Selector.h",
     ],
     hdrs = [
     ],
