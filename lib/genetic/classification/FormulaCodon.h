@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_FORMULA_CODON_H
-#define LIB_GENETIC_FORMULA_CODON_H
+#pragma once
 
 #include "lib/util/Random.h"
 #include "lib/assert/Assert.h"
@@ -114,5 +113,3 @@ std::ostream& operator<<(std::ostream& os, const FormulaCodon& fc) {
 }
 
 }
-
-#endif

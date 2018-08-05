@@ -1,5 +1,4 @@
-#ifndef LIB_UTIL_RANDOM_H
-#define LIB_UTIL_RANDOM_H
+#pragma once
 
 #include <cstdlib>
 
@@ -12,5 +11,3 @@ int rand(int end) { return ::rand() % end; }
 int rand(int start, int end) { return (::rand() % (end - start)) + start; }
 
 }
-
-#endif

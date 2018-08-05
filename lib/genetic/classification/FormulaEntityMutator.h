@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_FORMULA_ENTITY_MUTATOR_H
-#define LIB_GENETIC_FORMULA_ENTITY_MUTATOR_H
+#pragma once
 
 #include "lib/util/Random.h"
 #include "lib/genetic/classification/FormulaEntity.h"
@@ -12,7 +11,7 @@ public:
 
     FormulaEntityMutator(float prob_)
         : prob(prob_) {
-            assertIsGreaterOrEqual(1.0f, prob);
+            //assertIsGreaterOrEqual(1.0f, prob);
             assertIsGreaterOrEqual(prob, 0.0f);
         }
 
@@ -31,5 +30,3 @@ public:
 };
 
 }
-
-#endif

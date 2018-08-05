@@ -1,5 +1,4 @@
-#ifndef LIB_TENSOR_TENSOR_SIZE_H
-#define LIB_TENSOR_TENSOR_SIZE_H
+#pragma once
 
 #include <cstdio>
 #include <iostream>
@@ -54,5 +53,3 @@ private:
 std::ostream& operator<<(std::ostream& os, const TensorSize& t);
 
 }; // namespace Zerg
-
-#endif // LIB_TENSOR_TENSOR_SIZE_H

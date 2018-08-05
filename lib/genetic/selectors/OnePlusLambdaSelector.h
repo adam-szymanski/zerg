@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_SELECTORS_ONE_PLUS_LAMBDA_SELECTOR_H
-#define LIB_GENETIC_SELECTORS_ONE_PLUS_LAMBDA_SELECTOR_H
+#pragma once
 
 #include <vector>
 
@@ -41,5 +40,3 @@ public:
 };
 
 }
-
-#endif
