@@ -36,7 +36,7 @@ int main() {
 
     vector<FormulaEntity> entities;
     for (int i = 0; i < 30; ++i)
-        entities.push_back(FormulaEntity(examples.getRowSize(), 15));
+        entities.push_back(FormulaEntity(labels.getRowSize(), examples.getRowSize(), 15));
 
     auto population = makePopulation(env, selectorArena, mutator, crosser, entities);
     for (int i = 0; i < 1000000; ++i) {
