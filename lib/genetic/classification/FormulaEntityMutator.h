@@ -11,7 +11,6 @@ public:
 
     FormulaEntityMutator(float prob_)
         : prob(prob_) {
-            //assertIsGreaterOrEqual(1.0f, prob);
             assertIsGreaterOrEqual(prob, 0.0f);
         }
 

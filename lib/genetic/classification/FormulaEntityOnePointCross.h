@@ -15,7 +15,7 @@ public:
         const FormulaEntity& a_ = shouldSwap ? b : a;
         const FormulaEntity& b_ = shouldSwap ? a : b;
         size_t crossPoint = rand(std::min(a_.codons.size(), b_.codons.size()));
-        FormulaEntity child(a_.inputSize, a_.codons.size());
+        FormulaEntity child(a_.outputSize, a_.inputSize, a_.codons.size());
         for (size_t i = 0; i < crossPoint; ++i)
             child.codons[i] = b_.codons[i];
         for (size_t i = crossPoint; i < a_.codons.size(); ++i)

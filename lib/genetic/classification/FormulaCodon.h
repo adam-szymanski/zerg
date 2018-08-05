@@ -16,7 +16,6 @@ enum FormulaCodonType {
     FORMULA_CODON_DIV,
     FORMULA_CODON_SUM_RANGE,
     FORMULA_CODON_LOG,
-    FORMULA_CODON_RETURN,
     FORMULA_CODON_NUM,
 };
 
@@ -59,7 +58,6 @@ public:
                 float aVal = getValAtAddress(a, values, pos);
                 return log(aVal > 1.0f ? aVal : 1.0f);
             }
-            case FORMULA_CODON_RETURN: return getValAtAddress(pos - 1, values, pos);
             default : assertIsTrue(false); return 0;
         }
     }
@@ -91,7 +89,6 @@ private:
                 if (pos < 1) return false;
                 a.jumpDistance = pos > 1 ? rand(0, pos) : 0;
                 return true;
-            case FORMULA_CODON_RETURN: assertIsGreater(pos, 0); return true;
             default : assertIsTrue(false);
         }
         return false;
@@ -106,7 +103,6 @@ std::ostream& operator<<(std::ostream& os, const FormulaCodon& fc) {
         case FORMULA_CODON_DIV: os << "/(" << fc.a.jumpDistance << ", " << fc.b.jumpDistance << ")"; break;
         case FORMULA_CODON_SUM_RANGE: os << "+(" << fc.a.jumpDistance << ":" << fc.b.jumpDistance << ")"; break;
         case FORMULA_CODON_LOG: os << "log(" << fc.a.jumpDistance << ")"; break;
-        case FORMULA_CODON_RETURN: os << "ret"; break;
         default : assertIsTrue(false);
     }
     return os;
