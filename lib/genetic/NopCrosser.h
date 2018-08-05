@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_NOP_CROSSER_H
-#define LIB_GENETIC_NOP_CROSSER_H
+#pragma once
 
 namespace Zerg {
 
@@ -12,5 +11,3 @@ public:
 };
 
 }
-
-#endif

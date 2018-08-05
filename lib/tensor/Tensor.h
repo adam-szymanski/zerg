@@ -1,5 +1,4 @@
-#ifndef LIB_TENSOR_TENSOR_H
-#define LIB_TENSOR_TENSOR_H
+#pragma once
 
 #include "lib/assert/Assert.h"
 #include "lib/tensor/TensorSize.h"
@@ -93,5 +92,3 @@ private:
 std::ostream& operator<<(std::ostream& os, const Tensor& t);
 
 }; // namespace Zerg
-
-#endif // LIB_TENSOR_TENSOR_H

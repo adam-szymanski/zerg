@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_CLASSIFICATION_ENVIRONMENT_H
-#define LIB_GENETIC_CLASSIFICATION_ENVIRONMENT_H
+#pragma once
 
 using namespace std;
 
@@ -45,5 +44,3 @@ public:
 };
 
 }
-
-#endif

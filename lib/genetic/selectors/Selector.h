@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_SELECTORS_SELECTOR_H
-#define LIB_GENETIC_SELECTORS_SELECTOR_H
+#pragma once
 
 #include <vector>
 
@@ -14,5 +13,3 @@ public:
 };
 
 }
-
-#endif

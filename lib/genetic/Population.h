@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_POPULATION_H
-#define LIB_GENETIC_POPULATION_H
+#pragma once
 
 #include <experimental/optional>
 #include <vector>
@@ -64,6 +63,3 @@ Population<Entity, Environment, Mutator, Selector, Crosser> makePopulation(Envir
 }
 
 }
-
-
-#endif // LIB_GENETIC_POPULATION_H

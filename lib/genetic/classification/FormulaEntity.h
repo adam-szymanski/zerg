@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_FORMULA_ENTITY_H
-#define LIB_GENETIC_FORMULA_ENTITY_H
+#pragma once
 
 #include "lib/util/Random.h"
 
@@ -54,5 +53,3 @@ std::ostream& operator<<(std::ostream& os, const FormulaEntity& fe) {
 }
 
 }
-
-#endif

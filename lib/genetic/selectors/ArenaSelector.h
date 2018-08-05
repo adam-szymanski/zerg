@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_ARENA_SELECTOR_H
-#define LIB_GENETIC_ARENA_SELECTOR_H
+#pragma once
 
 #include <set>
 #include <tuple>
@@ -51,5 +50,3 @@ public:
 };
 
 }
-
-#endif

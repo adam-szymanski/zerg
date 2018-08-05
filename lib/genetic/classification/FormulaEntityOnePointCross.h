@@ -1,5 +1,4 @@
-#ifndef LIB_GENETIC_FORMULA_ENTITY_ONE_POINT_CROSS_H
-#define LIB_GENETIC_FORMULA_ENTITY_ONE_POINT_CROSS_H
+#pragma once
 
 #include "lib/util/Random.h"
 
@@ -26,5 +25,3 @@ public:
 };
 
 }
-
-#endif
