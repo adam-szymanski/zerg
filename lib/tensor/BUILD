@@ -12,3 +12,12 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 
+cc_test(
+    name = "tensor_test",
+    srcs = ["TensorTest.cc"],
+    deps = [
+        "@gtest//:gtest_main",
+        ":tensor"
+    ],
+    data = ["test.csv"],
+)

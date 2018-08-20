@@ -1,6 +1,7 @@
 #include "lib/tensor/Tensor.h"
 
-#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 namespace Zerg {
 
@@ -104,6 +105,28 @@ Tensor::Tensor(const TensorSize& size_)
   : size(size_)
   , data(size_.getElementsNum()) {
   data.shrink_to_fit();
+}
+
+Tensor Tensor::createSlice(size_t dim, size_t offset, size_t num) {
+  const TensorSize& size = getSize();
+  assertIsGreater(size.getDimensionNum(), dim);
+  assertIsGreaterOrEqual(size.getDimension(dim), offset);
+  assertIsGreaterOrEqual(size.getDimension(dim), offset + num);
+
+  vector<size_t> newSizeV(size.getSize().begin(), size.getSize().end());
+  newSizeV[dim] = num;
+
+  Tensor out(newSizeV);
+  const TensorSize& newSize = out.getSize();
+  size_t lineSize = size.getStride(dim + 1, size.getDimensionNum());
+  size_t newLineSize = newSize.getStride(dim + 1, newSize.getDimensionNum());
+  size_t lines = getElementsNum() / lineSize;
+  size_t end = size.getElementsNum();
+  size_t posSrc = size.getStride(dim, size.getDimensionNum()) * offset;
+  for (size_t posDst = 0; posSrc < end; posSrc += lineSize, posDst += newLineSize) {
+    memcpy(&out.data[posDst], &data[posSrc], sizeof(float) * newLineSize);
+  }
+  return out;
 }
 
 Tensor::Tensor(const std::vector<size_t>& size_)
@@ -228,6 +251,55 @@ std::ostream& operator<<(std::ostream& os, const Tensor& t) {
     }
   }
   return os;
+}
+
+Tensor Tensor::loadCSVFromFile(FILE* f, char delimeter) {
+	if (!f) {
+		return Tensor();
+	}
+	char buffer[4096]; // line buffer
+	Tensor out({1, 0});
+	float a;
+	bool firstLine = true;
+	unsigned int line = 0;
+	while (fscanf(f, "%[^\n]\n", buffer) > 0) {
+		unsigned int pos = 0;
+		size_t length = strlen(buffer);
+		unsigned int n = 0;
+		if (!firstLine) {
+			out.addRows(1);
+      std::fill(out.data.begin() + out.getSize().getElementPos(0, line), out.data.begin() + out.getSize().getElementPos(0, line + 1), 0);
+		}
+		for (unsigned int i = 0; i < length; ++i) {
+			if (buffer[i] == delimeter || i == length - 1) {
+				sscanf(buffer + pos, "%f", &a);
+				pos = i + 1;
+				if (firstLine) {
+					out.addRows(1);
+					out.val(0, out.getRowsNum() - 1) = a;
+				} else {
+					out.val(n, line) = a;
+				}
+				++n;
+			}
+		}
+		if (firstLine) {
+      out.size = TensorSize({n, 1});
+		}
+		++line;
+		firstLine = false;
+	}
+	return out;
+}
+
+Tensor Tensor::loadCSVFromFile(const char* filename, char delimeter){
+	FILE* f = fopen(filename, "rb");
+  assertNotNull(f);
+  if (!f) return Tensor();
+	Tensor m = loadCSVFromFile(f, delimeter);
+	if (f)
+		fclose(f);
+	return m;
 }
 
 }; // namespace Zerg

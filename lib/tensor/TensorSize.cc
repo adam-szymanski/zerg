@@ -73,36 +73,38 @@ size_t TensorSize::getElementPos(size_t x) const {
 }
 size_t TensorSize::getElementPos(size_t x, size_t y) const {
   assertIsEqual(getDimensionNum(), 2);
-  return x * getDimSize(1) + y * getDimSize(0);
+  return x + y * dimSize[1];
 }
 size_t TensorSize::getElementPos(size_t x, size_t y, size_t z) const {
   assertIsEqual(getDimensionNum(), 3);
-  return x * getDimSize(2) + getDimSize(1) * y + getDimSize(0) * z;
+  return x + dimSize[2] * y + dimSize[1] * z;
 }
 size_t TensorSize::getElementPos(size_t x, size_t y, size_t z, size_t w) const {
   assertIsEqual(getDimensionNum(), 4);
-  return x * getDimSize(3) + getDimSize(2) * y + getDimSize(1) * z + getDimSize(0) * w;
+  return x + dimSize[3] * y + dimSize[2] * z + dimSize[1] * w;
 }
 size_t TensorSize::getStride(size_t dim, size_t tensorDim) const {
   assertIsGreaterOrEqual(tensorDim, dim);
+  assertIsGreaterOrEqual(size.size(), tensorDim);
+  if (dim == 0) return 1;
   const size_t l = tensorDim - dim;
   if (l > getDimensionNum()) return 0;
-  return getDimSize(tensorDim - 1 - dim);
+  return getDimSize(tensorDim - dim);
 }
 size_t TensorSize::getDimSize(size_t dim, size_t tensorDim) const {
   assertIsGreaterOrEqual(tensorDim, dim);
   const size_t l = tensorDim - dim;
   if (l > getDimensionNum()) return 0;
   if (dim == 0)
-    return getDimSize(tensorDim - 1) * size[getDimensionNum() - tensorDim];
+    return dimSize[l - 1];
   else
-    return size[getDimensionNum() - l];
+    return size[size.size() - l];
 }
 
 TensorSize::TensorSize(const std::vector<size_t>& size_)
   : size(size_)
-  , dimSize(size_.size()) {
-  size_t last = getDimensionNum() - 1;
+  , dimSize(size_.size() + 1) {
+  size_t last = getDimensionNum();
   dimSize[last] = 1;
   for (size_t i = last; i > 0; --i)
     dimSize[i - 1] = dimSize[i] * size[last - i];

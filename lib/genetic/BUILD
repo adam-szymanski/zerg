@@ -14,5 +14,8 @@ cc_library(
         "//lib/tensor:tensor",
         "//lib/util:utils"
     ],
+    copts = [
+        "-std=c++1y",
+    ],
     visibility = ["//visibility:public"],
 )

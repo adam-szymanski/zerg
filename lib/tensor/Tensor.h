@@ -22,6 +22,9 @@ public:
 
   // Creates tensor which rows are subset of given tensor
   Tensor(const Tensor& t, size_t index, size_t rows);
+
+  // Creates copy of region of given Tensor
+  Tensor createSlice(size_t dim, size_t offset, size_t num);
   
   // Creates tensor with given shape, with 0 rows.
   static Tensor createWithShape(const std::vector<size_t>& shape, size_t rows = 0);
@@ -85,6 +88,8 @@ public:
   
   void saveCSV(const char* filename) const;
   void saveCSV(FILE* f) const;
+  static Tensor loadCSVFromFile(FILE* f, char delimeter = ',');
+  static Tensor loadCSVFromFile(const char* filename, char delimeter = ',');
 private:
   static void copy(const Tensor& src, Tensor& dest);
 };
