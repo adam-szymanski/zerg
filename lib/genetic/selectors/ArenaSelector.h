@@ -43,7 +43,7 @@ public:
         sort(rank.begin(), rank.end(), [entities](const int& a, const int& b) -> bool { return *entities[a].score < *entities[b].score; });
 
         // Mutate the best one and place in place of worst one.
-        if (step % 1000 == 0)
+        if (step % 100 == 0)
             cout << step << " Best score: " << *entities[rank[0]].score << " (" << entities[rank[0]].entity << ")" << endl;
         entities[rank[rank.size() - 1]] = SE(mutator.mutate(crosser.cross(entities[rank[0]].entity, entities[rank[1]].entity)));
     }

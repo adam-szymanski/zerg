@@ -44,6 +44,7 @@
         "ctime": "cpp",
         "forward_list": "cpp",
         "list": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "unordered_set": "cpp"
     }
 }

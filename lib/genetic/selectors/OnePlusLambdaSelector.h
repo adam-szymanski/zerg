@@ -34,7 +34,7 @@ public:
         for (size_t i = 1; i < entities.size(); ++i)
             entities[i] = SE(mutator.mutate(entities[0].entity));
 
-        if (step % 1000 == 0)
+        if (step % 100 == 0)
             cout << step << " Best score: " << bestScore << " (" << entities[0].entity << ")" << endl;
     }
 };

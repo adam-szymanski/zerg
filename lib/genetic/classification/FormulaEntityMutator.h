@@ -14,7 +14,7 @@ public:
             assertIsGreaterOrEqual(prob, 0.0f);
         }
 
-    FormulaEntity mutate(const FormulaEntity& e) {
+    FormulaEntity mutate(const FormulaEntity& e) const {
         float acc = prob;
         FormulaEntity e2 = e;
         while (acc > 0) {

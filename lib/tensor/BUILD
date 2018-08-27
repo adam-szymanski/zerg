@@ -6,7 +6,8 @@ cc_library(
     ],
     hdrs = [
         "Tensor.h",
-        "TensorSize.h"
+        "TensorSize.h",
+        "TensorUtil.h",
     ],
     deps = ["//lib/assert:assert"],
     visibility = ["//visibility:public"],

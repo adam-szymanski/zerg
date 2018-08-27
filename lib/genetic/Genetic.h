@@ -1,4 +1,7 @@
 #include "lib/genetic/classification/ClassificationEnvironment.h"
+#include "lib/genetic/classification/AveragedFormulasEntity.h"
+#include "lib/genetic/classification/AveragedFormulasEntityMutator.h"
+#include "lib/genetic/classification/AveragedFormulasEntityOnePointCross.h"
 #include "lib/genetic/classification/FormulaCodon.h"
 #include "lib/genetic/classification/FormulaEntity.h"
 #include "lib/genetic/classification/FormulaEntityOnePointCross.h"

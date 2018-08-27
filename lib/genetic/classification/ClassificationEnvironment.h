@@ -23,8 +23,9 @@ public:
     float score(Entity& entity) {
         float error = 0.0f;
         for (size_t i = 0; i < examples.getRowsNum(); ++i) {
-            const vector<float>& output = entity.evaluate(examples.getPointer() + examples.getSize().getElementPos(0, i), examples.getPointer() + examples.getSize().getElementPos(0, i + 1));
+            vector<float> output = entity.evaluate(examples.getPointer() + examples.getSize().getElementPos(0, i), examples.getPointer() + examples.getSize().getElementPos(0, i + 1));
             assertIsEqual(output.size(), labels.getRowSize());
+            std::transform(output.begin(), output.end(), output.begin(), [](float a) { return 1 / (1 + exp(-a)); });
             for (size_t j = 0; j < output.size(); ++j) {
                 float diff = labels.val(j, i) - output[j];
                 error += diff * diff;

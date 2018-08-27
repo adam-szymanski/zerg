@@ -1,6 +1,9 @@
 cc_library(
     name = "classification",
     srcs = [
+        "AveragedFormulasEntity.h",
+        "AveragedFormulasEntityMutator.h",
+        "AveragedFormulasEntityOnePointCross.h",
         "ClassificationEnvironment.h",
         "FormulaCodon.h",
         "FormulaEntity.h",

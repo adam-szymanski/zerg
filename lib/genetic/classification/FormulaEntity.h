@@ -1,8 +1,9 @@
 #pragma once
 
+#include "lib/genetic/classification/FormulaCodon.h"
 #include "lib/util/Random.h"
 
-#include "lib/genetic/classification/FormulaCodon.h"
+#include <iostream>
 
 namespace Zerg {
 
@@ -24,14 +25,6 @@ public:
 
     template<typename Iter>
     vector<float> evaluate(const Iter& begin, const Iter& end) {
-        auto output = evaluateInner(begin, end);
-        std::transform(output.begin(), output.end(), output.begin(), [](float a) { return 1 / (1 + exp(-a)); });
-        return output;
-    }
-
-private:
-    template<typename Iter>
-    vector<float> evaluateInner(const Iter& begin, const Iter& end) {
         assertIsEqual(begin + inputSize, end);
         for (size_t i = 0; i < inputSize; ++ i) {
             valueCache[i] = *(begin + i);

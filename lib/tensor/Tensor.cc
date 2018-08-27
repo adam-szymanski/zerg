@@ -120,7 +120,6 @@ Tensor Tensor::createSlice(size_t dim, size_t offset, size_t num) {
   const TensorSize& newSize = out.getSize();
   size_t lineSize = size.getStride(dim + 1, size.getDimensionNum());
   size_t newLineSize = newSize.getStride(dim + 1, newSize.getDimensionNum());
-  size_t lines = getElementsNum() / lineSize;
   size_t end = size.getElementsNum();
   size_t posSrc = size.getStride(dim, size.getDimensionNum()) * offset;
   for (size_t posDst = 0; posSrc < end; posSrc += lineSize, posDst += newLineSize) {

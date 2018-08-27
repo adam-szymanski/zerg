@@ -6,9 +6,6 @@ cc_binary(
         "//lib/genetic:genetic",
         "//lib/tensor:tensor",
     ],
-    data = [
-        "test.csv",
-    ],
     copts = [
         "-std=c++1y",
     ],
